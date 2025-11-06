@@ -1,0 +1,18 @@
+it was a new kinda problem .was simple takes time to grasp of the problem (atleast for me)
+so we are told that we number is choosen between 1 to n
+and we need to guess it 
+so we are chosing BINARY SEARCH
+and we are given an API(a funnction which will check if the number is lower, higher, or we it is the number)
+so we find mid = low + (high - low) /2;
+and we store the mid in int ans = guess(mid)
+this ans will be checked if it is 1, -1, or 0
+if(ans == 0){
+                return mid;
+            }
+            else if(ans == -1){
+                high = mid - 1;
+            }
+            else{
+                low = mid + 1;
+            }
+and the number will be guessed in the loop so as we "HAVE TO" return at the end so we can just retuen 1. 
