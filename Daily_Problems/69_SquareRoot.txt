@@ -1,0 +1,15 @@
+It was an Easy Problem..but i found it hard not hard as per say i was missing the overflow issue
+it is a binary search problem i basically need to divide the range from 1 to x .
+and then divide it into half and compare the[mid = left + (right - left) / 2 ]^2 with x, so that i an figure out one which side of the araay the square root might be there
+
+while left <= right
+if square == x {
+    retuurn mid;//thats the answer only
+}
+else if(square) < x{
+    left = mid + 1;
+}
+else{
+    right = mid -1;
+}
+return right;
