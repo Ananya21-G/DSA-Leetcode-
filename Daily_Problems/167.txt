@@ -1,0 +1,42 @@
+Declares a public method twoSum that:
+Returns an int[] (an array of two integers).
+Accepts numbers (an integer array that is sorted in non-decreasing order) and target (the integer sum we want).
+This is the entry point called by the judge.
+//    public int[] twoSum(int[] numbers, int target) 
+Declares a public method twoSum that:
+Returns an int[] (an array of two integers).
+Accepts numbers (an integer array that is sorted in non-decreasing order) and target (the integer sum we want).
+This is the entry point called by the judge.
+//        int left = 0;
+Creates an integer variable left and initializes it to 0.
+left is a pointer/index that starts at the beginning of the array (0-based index).
+//        int right = numbers.length - 1;
+Creates an integer right and sets it to the last index of the array (length - 1).
+right is a pointer that starts at the end of the array.
+//        while(left < right)
+Begins a loop that continues as long as left is strictly less than right.
+Important: left < right ensures you never pick the same element twice and respects index1 < index2.
+Loop invariant: at the start of each iteration, every pair with an index less than left or greater than right has already been ruled out as a solution.
+//            int sum = numbers[left] + numbers[right];
+Computes the sum of the two elements currently pointed to by left and right.
+Stored in sum for comparison with target.
+//            if(sum == target)
+Checks if the current pair adds exactly to the target.
+//                return new int[]{left + 1, right + 1}; // return 1-based indices
+If the sum matches, immediately returns an array containing the two indices converted to 1-based indexing (problem requires 1-based).
+left + 1 and right + 1 convert from Java’s 0-based indices to the problem’s required 1-based indices.
+Returning ends the method — no further iterations are done.
+            }
+            else if(sum < target){
+Else, if the sum is less than the target, we need a bigger sum.
+                left++;
+Increment left to move to a larger number (because array is sorted). This potentially increases sum.
+This is the key two-pointer logic: move the pointer that will make the sum closer to the target.
+            } 
+            else {
+Otherwise (sum > target): current sum is too large.
+                right--;
+Decrement right to move to a smaller number, which decreases sum.
+End of the while loop. Loop repeats until left >= right. By problem guarantee, the loop should find the pair before pointers cross.
+        return new int[]{-1, -1}; // fallback (should not happen)
+A fallback return if no solution is found. According to the problem statement there is always exactly one solution, so this line should never run — but it's syntactically required because the method must return an int[] on all control paths.
