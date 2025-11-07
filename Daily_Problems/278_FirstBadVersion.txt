@@ -1,0 +1,10 @@
+problem from easy section of binary search.
+just imagine a sorted array from 1 to n ,and one becomes faulty and after that all of it becomes faulty . so we need to  find the first faulty one.
+we will define left = 1;right=n;and a mid = left + (right - left)/2;
+while (left < right)//remember left cant be equal to right ..time will exceed
+    if (isBadVersion(mid)){
+        right = mid;
+    }else {
+        left = mid + 1;
+    }
+    return anything left or right;
