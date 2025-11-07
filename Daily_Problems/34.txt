@@ -1,0 +1,94 @@
+medium level question of Array and Binary search.
+here we are given a non-decreasing array mind it is not same as ascending order array.
+and we need to return the index value of the target when it occured the 1st time and the last time.
+so the brute force approach would be if i iterate through the whole array but time complexity will be a whopping O(n)
+So we can use binary search but the catch is not once but twice cause we need to find the target twice
+Overall Logic
+
+We want to find the first and last positions of a given target in a sorted array.
+
+We use binary search twice:
+
+Once to find the leftmost (first) occurrence
+
+Once to find the rightmost (last) occurrence
+
+If the target is not found, return [-1, -1].
+
+searchRange()
+
+Calls two helper functions:
+
+findLeftBound() → returns first index of target
+
+findRightBound() → returns last index of target
+
+Returns [left, right].
+
+findLeftBound() → Find First (Leftmost) Occurrence
+
+Initialize index = -1 → means target not found initially.
+
+Perform binary search:
+
+Compute mid.
+
+If nums[mid] == target:
+
+Store mid into index (possible answer).
+
+Move high left: high = mid - 1 → keep searching left side.
+
+Else if nums[mid] < target:
+
+Move right: low = mid + 1
+
+Else (nums[mid] > target):
+
+Move left: high = mid - 1
+
+Return index.
+
+Key idea: When found, keep searching left to find the earliest appearance.
+
+findRightBound() → Find Last (Rightmost) Occurrence
+
+Initialize index = -1.
+
+Perform binary search:
+
+Compute mid.
+
+If nums[mid] == target:
+
+Store mid in index.
+
+Move low right: low = mid + 1 → keep searching right side.
+
+Else if nums[mid] < target:
+
+Move right: low = mid + 1
+
+Else:
+
+Move left: high = mid - 1
+
+Return index.
+
+Key idea: When found, keep searching right to find the latest appearance.
+
+Why It Works
+
+Binary search ensures O(log n) time.
+
+Searching left finds the first position.
+
+Searching right finds the last position.
+
+Returning both gives the full range [first, last].
+
+Final Result Format
+
+If target exists → [first_index, last_index]
+
+If not → [-1, -1]  
