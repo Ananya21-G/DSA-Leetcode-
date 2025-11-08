@@ -1,0 +1,21 @@
+Row 1 → 1 coin  
+Row 2 → 2 coins  
+Row 3 → 3 coins  
+Row 4 → 4 coins  
+...
+As k increases, the required coins:
+
+k(k+1)/2
+Binary Search Meaning Here
+
+mid = our guess of how many rows we can build (k)
+
+need = mid*(mid+1)/2 = coins needed for mid rows
+
+We compare:
+If need == n → perfect match → return mid
+If need < n → we can try more rows → move left
+If need > n → we tried too many rows → move right
+When the loop ends, right holds the correct k.
+
+	​

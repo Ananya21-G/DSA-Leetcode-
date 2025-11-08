@@ -1,0 +1,15 @@
+left = 1, right = num: We search the possible square root range between 1 and num.
+
+while(left <= right): Perform binary search.
+
+mid = left + (right - left) / 2: Find the midpoint to avoid overflow.
+
+sq = mid * mid: Calculate the square of mid.
+
+if (sq == num): If perfect square found → return true.
+
+else if (sq < num): If square is too small → move search to right half (left = mid + 1).
+
+else: If square is too large → move search to left half (right = mid - 1).
+
+If loop ends → no integer squared equals num → return false.
