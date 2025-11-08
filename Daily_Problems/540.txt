@@ -1,0 +1,54 @@
+Logic of the Problem
+
+The array is sorted.
+
+Every element appears exactly twice, except one element which appears once.
+
+Because elements are in pairs, each pair occupies two consecutive positions.
+
+If no unique element existed, then:
+
+pairs would look like:
+index: 0 1 | 2 3 | 4 5 | ...
+value: a a | b b | c c | ...
+
+
+So, for every pair, the first element is at an even index, and the second at the next odd index.
+
+Where the Unique Element Causes a Break
+
+When the single element appears, this even-odd pairing pattern breaks.
+
+Example:
+
+[1, 1, 2, 3, 3, 4, 4]
+         ↑ unique
+
+
+Before the unique element:
+
+Pairs are normal → start at even index.
+
+After the unique element:
+
+Indexing becomes shifted → pairs start at odd index.
+
+Binary Search Logic
+
+Use binary search to find where the pairing breaks.
+
+Always force mid to be even so we compare nums[mid] with nums[mid + 1].
+
+Check Pattern:
+
+If nums[mid] == nums[mid + 1]
+→ Pair is correct → unique is to the right → move low = mid + 2
+
+If nums[mid] != nums[mid + 1]
+→ Pair is broken → unique is to the left or at mid → move high = mid
+
+Continue until low == high, which is the position of the single element.
+
+Core Insight (One Line):
+
+The unique element is located at the first index where the normal even-indexed pairing pattern fails.
