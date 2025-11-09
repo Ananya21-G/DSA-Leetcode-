@@ -1,0 +1,26 @@
+The array is rotated but remains partly ordered. Each iteration we check mid. If not found, we detect which half (left or right) is properly sorted and decide whether the target could be inside that sorted half. If yes, we restrict to that half; otherwise we go to the other half. That keeps the search window halving each iteration => O(log n).
+Concept Explanation (Short and Clear)
+
+The array was originally sorted.
+
+It was rotated at some unknown index.
+
+Even after rotation:
+
+One half is always sorted.
+
+Use mid to detect which half is sorted:
+
+If nums[low] <= nums[mid] → Left half is sorted.
+
+Otherwise → Right half is sorted.
+
+After identifying the sorted half:
+
+Check if target lies within that sorted half.
+
+If yes → Continue search inside that half.
+
+If no → Search the opposite half.
+
+Repeat until found or search space ends.
