@@ -1,0 +1,41 @@
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+
+        // We will perform binary search since letters[] is already sorted.
+        int low = 0;
+        int high = letters.length - 1;
+
+        // Goal: Find the smallest letter strictly greater than target.
+        while (low <= high) {
+
+            // Standard binary search mid calculation.
+            int mid = low + (high - low) / 2;
+
+            // If the character at mid is greater than the target,
+            // it is a potential answer, but we try to see if there is a smaller valid answer on the left.
+            if (letters[mid] > target) {
+                high = mid - 1;
+            }
+
+            // Otherwise, letters[mid] is less than or equal to target.
+            // So the answer must be on the right side.
+            else {
+                low = mid + 1;
+            }
+        }
+
+        /*
+         When the loop ends:
+         - low is the index where the next greatest letter should be.
+         - If low is within range, letters[low] is the answer.
+         - If low goes past the last index, that means no letter > target exists,
+           so we wrap around and return letters[0].
+
+         Using modulo handles both cases:
+         low % letters.length
+         If low == letters.length → (letters.length % letters.length) = 0 → wrap to first element.
+         If low is valid → returns letters[low] normally.
+        */
+        return letters[low % letters.length];
+    }
+}
