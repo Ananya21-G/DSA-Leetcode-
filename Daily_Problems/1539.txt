@@ -1,0 +1,95 @@
+Problem Goal
+
+We want to find the k-th missing positive number from a strictly increasing array of positive integers.
+
+Key Insight
+
+For any index mid in the array:
+
+Missing numbers before arr[mid] = arr[mid] - (mid + 1)
+
+
+Why?
+
+If there were no missing numbers, then ideally:
+
+At index 0 → value = 1
+
+At index 1 → value = 2
+
+At index 2 → value = 3
+and so on…
+
+So at index mid, the expected value is mid + 1.
+
+If the value is bigger than expected, the difference tells how many numbers are missing.
+
+Example
+
+Index:      0  1  2  3
+Array:      2  3  4  7
+Expected:   1  2  3  4
+Difference: 1  1  1  3
+
+Missing counts are: arr[mid] - (mid + 1)
+
+
+So:
+
+At index 3: arr[3] = 7
+Missing count = 7 - (3+1) = 3
+Meaning 3 numbers are missing before 7 → {1, 5, 6}
+
+Binary Search Logic
+
+We use binary search to find the first index in the array where the missing count becomes >= k.
+
+If missing < k, we need to search right side → set left = mid + 1
+
+If missing >= k, we search left side → set right = mid
+
+When the loop ends, left will be the smallest index where missing numbers have reached k.
+
+Finally,
+
+Answer = left + k
+
+
+Because for all indices before left, exactly left numbers are present, so the missing number shifts ahead by left.
+
+Documented Code
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+
+        // We will use binary search to find the smallest index
+        // where the count of missing numbers becomes >= k
+        int left = 0;
+        int right = arr.length;
+
+        while (left < right) {
+
+            // mid index
+            int mid = left + (right - left) / 2;
+
+            // Count how many numbers are missing before arr[mid]
+            // missing = arr[mid] - (mid + 1)
+            if (arr[mid] - mid - 1 < k) {
+                // Missing count is still less than k,
+                // so we need to move to the right half
+                left = mid + 1;
+            } else {
+                // Missing count is >= k, move to left half
+                right = mid;
+            }
+        }
+
+        // At this point, left tells how many numbers from the array are <= answer
+        // So the k-th missing number is shifted ahead by 'left'
+        return left + k;
+    }
+}
+
+Quick Memory Trick
+
+arr[mid] - (mid + 1) → missing count before mid
+Compare missing count with k and binary search like normal.
