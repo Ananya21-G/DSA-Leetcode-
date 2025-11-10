@@ -1,0 +1,56 @@
+class Solution {
+
+    /*
+     * Problem Summary:
+     * We have a sorted array (strictly increasing, no duplicates).
+     * We need to find the index of the target if it exists.
+     * If the target does not exist, we must return the index where it should be inserted
+     * to maintain the sorted order.
+     *
+     * Requirement:
+     * Time complexity must be O(log n), so we use Binary Search.
+     *
+     * Key Insight:
+     * During binary search:
+     * - If target is found, return its index.
+     * - If not found, the position where "left" pointer stops is the index where
+     *   the target should be inserted.
+     *
+     * Why does "left" give the insert position?
+     * Because:
+     * - When nums[mid] < target, we move left to mid + 1 (target must be to the right).
+     * - When nums[mid] > target, we move right to mid - 1 (target must be to the left).
+     * Eventually, left ends up pointing to the exact location where the target belongs.
+     *
+     * Example:
+     * nums = [1, 3, 5, 6], target = 2
+     * After binary search, left = 1 → so insert at index 1.
+     */
+
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        // Standard Binary Search
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            // Target found
+            if (nums[mid] == target) {
+                return mid;
+            }
+            // If target should be in the right half
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            // If target should be in the left half
+            else {
+                right = mid - 1;
+            }
+        }
+
+        // If target not found:
+        // 'left' now represents the correct insert index.
+        return left;
+    }
+}
