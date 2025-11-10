@@ -1,0 +1,51 @@
+class Solution {
+
+    /*
+     * Problem Summary:
+     * A mountain array strictly increases up to a peak and then strictly decreases.
+     * We need to return the index of this peak element.
+     *
+     * Requirement:
+     * We must find the peak in O(log n) time → use Binary Search, not linear search.
+     *
+     * Key Observation:
+     * For any index mid:
+     *
+     *    If arr[mid] < arr[mid + 1], we are on the increasing slope.
+     *    Example: 2, 5, 8, 12, ...
+     *    The peak is further to the right.
+     *    → Move left pointer to mid + 1
+     *
+     *    If arr[mid] > arr[mid + 1], we are on the decreasing slope (or already at the peak).
+     *    Example: ..., 15, 9, 4, 1
+     *    The peak lies at mid or to the left.
+     *    → Move right pointer to mid
+     *
+     * Because the array is guaranteed to have a peak and no duplicates around it,
+     * eventually 'left' and 'right' will meet exactly at the peak index.
+     *
+     * When left == right, that position is the peak.
+     */
+
+    public int peakIndexInMountainArray(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        // Binary Search to locate the peak
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            // Check which side of the mountain we are on
+            if (arr[mid] < arr[mid + 1]) {
+                // Increasing slope → peak is on the right
+                left = mid + 1;
+            } else {
+                // Decreasing slope or at the peak → search left side
+                right = mid;
+            }
+        }
+
+        // When left == right, we have found the peak index
+        return left;
+    }
+}
