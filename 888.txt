@@ -1,0 +1,45 @@
+class Solution {
+    public int[] fairCandySwap(int[] aliceSizes, int[] bobSizes) {
+
+        // Step 1: Calculate total candies for Alice and Bob
+        int sumA = 0, sumB = 0;
+        for (int a : aliceSizes) sumA += a;
+        for (int b : bobSizes) sumB += b;
+
+        /*
+           Step 2: Find the difference that needs to be balanced.
+           After swapping candy box 'a' from Alice and 'b' from Bob:
+
+               (sumA - a + b) == (sumB - b + a)
+
+           Rearranging gives the formula:
+               a - b = (sumA - sumB) / 2
+
+           Let diff = (sumA - sumB) / 2.
+           So we want to find a pair such that:
+               b = a - diff
+        */
+        int diff = (sumA - sumB) / 2;
+
+        // Step 3: Put Bob's candy sizes in a HashSet for quick search
+        java.util.HashSet<Integer> setB = new java.util.HashSet<>();
+        for (int b : bobSizes) setB.add(b);
+
+        /*
+           Step 4: For each candy box size 'a' Alice has,
+                   calculate what 'b' we need from Bob.
+                   If 'b' exists in Bob's set, return the pair.
+        */
+        for (int a : aliceSizes) {
+            int b = a - diff;
+            if (setB.contains(b)) {
+                // Found valid swap pair
+                return new int[]{a, b};
+            }
+        }
+
+        // Problem guarantees at least one valid answer, 
+        // so this line usually never executes.
+        return new int[0];
+    }
+}
