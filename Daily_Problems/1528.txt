@@ -1,0 +1,48 @@
+// Problem: Shuffle String
+// Given a string 's' and an integer array 'indices' of the same length,
+// the goal is to rearrange the characters of 's' so that the character at
+// the i-th position moves to 'indices[i]' in the new string.
+//
+// Example:
+// Input: s = "code", indices = [3, 1, 2, 0]
+// Output: "edoc"
+// Explanation:
+// 'c' → position 3
+// 'o' → position 1
+// 'd' → position 2
+// 'e' → position 0
+// Result → "edoc"
+
+class Solution {
+
+    // Method to rearrange (or restore) the string according to the given indices
+    public String restoreString(String s, int[] indices) {
+
+        // Step 1: Create a character array of the same length as 's'
+        // This will hold the rearranged characters
+        char[] str = new char[s.length()];
+
+        // Step 2: Loop through each character in the original string
+        for (int i = 0; i < s.length(); i++) {
+
+            // Place the i-th character of 's' into its new correct position
+            // according to the indices array
+            str[indices[i]] = s.charAt(i);
+        }
+
+        // Step 3: Convert the character array back into a string
+        // 'String.valueOf(char[])' converts a character array into a string
+        return String.valueOf(str);
+    }
+}
+🧠 Concept Summary
+char[] str = new char[s.length()] → creates an empty array to hold characters in their new order.
+
+s.charAt(i) → accesses the i-th character of the original string.
+
+str[indices[i]] = s.charAt(i) → moves that character to the new position given by indices[i].
+
+String.valueOf(str) → converts the reordered char[] back into a String to return as the final answer.
+
+💡 Key Idea
+You’re basically mapping each character of the original string to its new position as defined by the indices array — a classic rearrangement problem.
