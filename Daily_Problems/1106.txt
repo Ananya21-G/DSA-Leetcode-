@@ -1,0 +1,29 @@
+// Problem: Defang an IP Address
+// Given a valid IP address, replace every period "." with "[.]".
+// Example: "1.1.1.1" → "1[.]1[.]1[.]1"
+
+class Solution {
+
+    // Method to convert a normal IP address into a defanged version
+    public String defangIPaddr(String address) {
+
+        // Using StringBuilder for better performance than string concatenation
+        StringBuilder ans = new StringBuilder();
+
+        // Loop through each character of the input string
+        for (int i = 0; i < address.length(); i++) {
+
+            // Check if the current character is a dot '.'
+            if (address.charAt(i) == '.') {
+                // If yes, append "[.]" instead of '.'
+                ans.append("[.]");
+            } else {
+                // Otherwise, append the current character as it is
+                ans.append(address.charAt(i));
+            }
+        }
+
+        // Convert StringBuilder to String and return the result
+        return ans.toString();
+    }
+}
