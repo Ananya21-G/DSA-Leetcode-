@@ -1,0 +1,81 @@
+/*
+💡 Problem: Goal Parser Interpretation
+-------------------------------------
+You are given a string command that represents instructions from a "Goal Parser".
+
+The command string consists of the following patterns:
+1. "G" → represents the string "G"
+2. "()" → represents the string "o"
+3. "(al)" → represents the string "al"
+
+You need to interpret the command and return the final interpreted string.
+
+🧩 Example:
+Input: "G()(al)"
+Output: "Goal"
+
+Explanation:
+- "G" → "G"
+- "()" → "o"
+- "(al)" → "al"
+→ Final output = "Goal"
+*/
+
+
+class Solution {
+    public String interpret(String command) {
+
+        // ✅ Using StringBuilder because it is efficient for string concatenation
+        StringBuilder ans = new StringBuilder();
+
+        // 🔁 Loop through each character in the command string
+        for (int i = 0; i < command.length(); i++) {
+
+            // Case 1: If the current character is 'G', directly append 'G'
+            if (command.charAt(i) == 'G') {
+                ans.append('G');
+            }
+
+            // Case 2: If we find '(', check what comes next
+            if (command.charAt(i) == '(') {
+
+                // If next character is ')', that means the pattern is "()"
+                // So append 'o' to the answer
+                if (command.charAt(i + 1) == ')') {
+                    ans.append('o');
+                    // Skip the next character ')' since it's already processed
+                    i++;
+                }
+
+                // Otherwise, the pattern is "(al)"
+                // So append "al" and skip the next 3 characters "al)"
+                else {
+                    ans.append("al");
+                    i += 3;
+                }
+            }
+        }
+
+        // Convert the StringBuilder to a normal string and return it
+        return ans.toString();
+    }
+}
+
+/*
+🧠 Approach Summary:
+--------------------
+1️⃣ Use a StringBuilder to build the result efficiently.
+2️⃣ Loop through the string character by character.
+3️⃣ Check each pattern:
+    - 'G' → add 'G'
+    - '()' → add 'o'
+    - '(al)' → add 'al'
+4️⃣ Adjust index `i` to skip over already-processed parts.
+
+⏱️ Time Complexity: O(n)
+   (We visit each character once)
+💾 Space Complexity: O(n)
+   (StringBuilder stores the final result)
+
+✅ Clean, simple, and efficient!
+*/
