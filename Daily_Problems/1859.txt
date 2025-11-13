@@ -1,0 +1,55 @@
+/*
+🎯 Problem: Sorting the Sentence
+--------------------------------
+Given a shuffled sentence where each word ends with a digit (its original position),
+reconstruct and return the original sentence.
+
+Example:
+Input:  "is2 sentence4 This1 a3"
+Output: "This is a sentence"
+*/
+
+class Solution {
+    public String sortSentence(String s) {
+        // Step 1️⃣: Split the sentence into words
+        String[] words = s.split(" ");
+
+        // Step 2️⃣: Create an array to hold words in their correct order
+        String[] arranged = new String[words.length];
+
+        // Step 3️⃣: Process each word to find its correct position
+        for (String word : words) {
+            // Extract the last character (the position number)
+            int index = word.charAt(word.length() - 1) - '0'; // Convert '1' → 1, '2' → 2, etc.
+
+            // Extract the actual word (remove the last character)
+            String actualWord = word.substring(0, word.length() - 1);
+
+            // Store the word at correct position (subtract 1 for 0-based indexing)
+            arranged[index - 1] = actualWord;
+        }
+
+        // Step 4️⃣: Join all words back into a sentence
+        return String.join(" ", arranged);
+    }
+}
+
+/*
+🧠 Example Dry Run:
+-------------------
+Input: "is2 sentence4 This1 a3"
+words = ["is2", "sentence4", "This1", "a3"]
+
+Loop:
+" is2 " → index = 2, actualWord = "is"
+" sentence4 " → index = 4, actualWord = "sentence"
+" This1 " → index = 1, actualWord = "This"
+" a3 " → index = 3, actualWord = "a"
+
+arranged = ["This", "is", "a", "sentence"]
+
+Output = "This is a sentence"
+
+✅ Time Complexity: O(n)
+✅ Space Complexity: O(n)
+*/
