@@ -1,0 +1,106 @@
+/*
+🎯 Problem: Count Items Matching a Rule
+---------------------------------------
+You are given a list of items, where each item is represented as a List<String> 
+containing three elements in the following order:
+1️⃣ Type
+2️⃣ Color
+3️⃣ Name
+
+You are also given two strings:
+- ruleKey: indicates which property to check ("type", "color", or "name")
+- ruleValue: the value you’re looking for in that property.
+
+You need to return the count of items that match the given rule.
+
+🧩 Example:
+-----------
+Input:
+items = [["phone","blue","pixel"], 
+         ["computer","silver","lenovo"], 
+         ["phone","gold","iphone"]]
+ruleKey = "color"
+ruleValue = "silver"
+
+Output: 1
+
+Explanation:
+Only one item ("computer","silver","lenovo") has color = "silver".
+*/
+
+
+import java.util.List;
+
+class Solution {
+    public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+
+        // ✅ Step 1: Identify which index (column) to check based on ruleKey
+        // items[i] = [type, color, name]
+        // Index mapping:
+        // "type"  -> 0
+        // "color" -> 1
+        // "name"  -> 2
+
+        int index = 0;  // default is 0 for "type"
+
+        if (ruleKey.equals("color"))
+            index = 1;
+        else if (ruleKey.equals("name"))
+            index = 2;
+
+
+        // ✅ Step 2: Initialize a counter to track how many items match the rule
+        int count = 0;
+
+
+        // ✅ Step 3: Loop through each item in the list
+        // Each item is itself a list of [type, color, name]
+        for (List<String> item : items) {
+
+            // If the value at the target index equals the ruleValue, increment the count
+            if (item.get(index).equals(ruleValue))
+                ++count;
+        }
+
+        // ✅ Step 4: Return the total count of matching items
+        return count;
+    }
+}
+
+
+/*
+🧠 APPROACH SUMMARY:
+--------------------
+1️⃣ Map the ruleKey ("type", "color", or "name") to its index in the inner list.
+2️⃣ Loop through all items and compare the element at that index with ruleValue.
+3️⃣ Count and return how many items match.
+
+⏱️ Time Complexity: O(n)
+   - We loop once through all items.
+💾 Space Complexity: O(1)
+   - Only a few variables used, no extra data structures.
+
+✅ Simple, efficient, and clean solution.
+*/
+
+
+/*
+🧩 DRY RUN EXAMPLE:
+-------------------
+Input:
+items = [["phone","blue","pixel"], 
+         ["computer","silver","lenovo"], 
+         ["phone","gold","iphone"]]
+ruleKey = "color"
+ruleValue = "silver"
+
+Step-by-step:
+ruleKey = "color" → index = 1
+
+Loop through items:
+1️⃣ item = ["phone","blue","pixel"] → item.get(1) = "blue"   → not equal
+2️⃣ item = ["computer","silver","lenovo"] → item.get(1) = "silver" → match → count = 1
+3️⃣ item = ["phone","gold","iphone"] → item.get(1) = "gold" → not equal
+
+Final count = 1 ✅
+*/
