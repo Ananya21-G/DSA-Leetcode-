@@ -1,0 +1,26 @@
+class Solution {
+
+    // This method checks whether two string arrays represent the same final string
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+
+        // Join all elements of word1 into one single string.
+        // Example: ["ab", "c"] → "abc"
+        // String.join("", array) concatenates all array elements with no separator.
+        String result1 = String.join("", word1);
+
+        // Join all elements of word2 into one single string.
+        String result2 = String.join("", word2);
+
+        // Compare the two final strings.
+        // equals() checks character-by-character equality.
+        return result1.equals(result2);
+    }
+}
+📌 Quick Summary (For Future You)
+Each input is an array of small string pieces.
+
+The task is to check whether concatenating all pieces from word1 equals the concatenation from word2.
+
+String.join("", array) merges all strings without adding any spaces.
+
+equals() is used (not ==) because it checks actual string content.
