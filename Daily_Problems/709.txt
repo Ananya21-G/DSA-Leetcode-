@@ -1,0 +1,41 @@
+class Solution {
+
+    // Function to convert all uppercase characters in a string to lowercase
+    public String toLowerCase(String s) {
+
+        // StringBuilder is used because strings in Java are immutable.
+        // Using StringBuilder makes repeated character appending efficient.
+        StringBuilder result = new StringBuilder();
+
+        // Loop through each character in the input string
+        for (char c : s.toCharArray()) {
+
+            // Check if the character is an uppercase English letter
+            // ASCII range for 'A' to 'Z' is 65 to 90
+            if (c >= 'A' && c <= 'Z') {
+
+                // Convert uppercase to lowercase using ASCII
+                // The difference between uppercase and lowercase letters is 32
+                // Example: 'A' (65) + 32 = 'a' (97)
+                result.append((char)(c + 32));
+
+            } else {
+                // If the character is not uppercase, keep it as it is
+                result.append(c);
+            }
+        }
+
+        // Convert StringBuilder to String and return
+        return result.toString();
+    }
+}
+📌 Quick Summary (For Future You)
+Characters 'A' to 'Z' have ASCII values 65–90
+
+Characters 'a' to 'z' have ASCII values 97–122
+
+The gap is 32, so uppercase + 32 = lowercase
+
+StringBuilder is used because it is faster for building strings
+
+Everything else is just looping and checking character ranges
