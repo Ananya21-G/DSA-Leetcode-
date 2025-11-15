@@ -1,0 +1,48 @@
+class Solution {
+
+    // Main function to check if two halves of the string have the same number of vowels
+    public boolean halvesAreAlike(String s) {
+
+        // Get total length of the string
+        int n = s.length();
+
+        // Middle index to divide the string into two equal halves
+        int mid = n / 2;
+
+        // First half of the string
+        String a = s.substring(0, mid);
+
+        // Second half of the string
+        String b = s.substring(mid);
+
+        // Compare the number of vowels in both halves
+        // If equal, return true; otherwise, false
+        return countVowels(a) == countVowels(b);
+    }
+
+    // Function to count the total number of vowels in a given string
+    private int countVowels(String str) {
+        int count = 0;
+
+        // Convert string to character array and check each character
+        for (char c : str.toCharArray()) {
+
+            // If the character is a vowel, increase the count
+            if (isVowel(c)) {
+                count++;
+            }
+        }
+
+        return count; // Return total vowel count
+    }
+
+    // Helper function to check if a character is a vowel
+    private boolean isVowel(char c) {
+
+        // Convert character to lowercase to handle both uppercase and lowercase vowels
+        c = Character.toLowerCase(c);
+
+        // Return true if character is one of the vowels
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+    }
+}
