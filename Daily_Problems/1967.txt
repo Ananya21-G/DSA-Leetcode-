@@ -1,0 +1,60 @@
+class Solution {
+
+    // Main function to count how many patterns appear as substrings in 'word'
+    public int numOfStrings(String[] patterns, String word) {
+        int count = 0; // Tracks how many patterns are found inside 'word'
+
+        // Check each pattern in the patterns array
+        for (String p : patterns) {
+
+            // If the pattern exists inside 'word' (using manual substring check)
+            if (isSubstring(word, p)) {
+                count++; // Increase the count
+            }
+        }
+
+        return count; // Return the total number of matching patterns
+    }
+
+    // Manual substring check function (WITHOUT using .contains() or indexOf())
+    private boolean isSubstring(String word, String pat) {
+        int n = word.length(); // Length of main word
+        int m = pat.length();  // Length of pattern we want to search
+
+        // A longer pattern can never be a substring of a shorter word
+        if (m > n) return false;
+
+        // Try matching the pattern starting from every possible index in 'word'
+        // We only go up to n - m because a match of size m cannot start after that
+        for (int i = 0; i <= n - m; i++) {
+            boolean match = true; // Assume it matches unless proven otherwise
+
+            // Compare the pattern with the substring starting at index i
+            for (int j = 0; j < m; j++) {
+
+                // If any character does not match, break the inner loop
+                if (word.charAt(i + j) != pat.charAt(j)) {
+                    match = false;
+                    break;
+                }
+            }
+
+            // If all characters matched, we found the pattern inside 'word'
+            if (match) return true;
+        }
+
+        // If no match was found after checking all positions, return false
+        return false;
+    }
+}
+🧠 Quick Summary (So You Remember Later)
+✔ You loop through every pattern
+✔ For each pattern, you manually check if it appears inside word
+✔ Manual checking works by:
+Choosing a starting point in word
+
+Comparing characters one by one
+
+Returning true if all characters match
+
+Returning false if no starting position matches
