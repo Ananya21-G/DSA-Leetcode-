@@ -1,0 +1,71 @@
+class Solution {
+
+    public String reverseWords(String s) {
+
+        // Convert the string into a character array
+        // because Strings in Java cannot be modified directly.
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+
+        // 'left' will always mark the start of a word
+        int left = 0;
+
+        // We move 'right' from 0 to n (end of string)
+        for (int right = 0; right <= n; right++) {
+
+            // When 'right' reaches a space OR the end of the string,
+            // it means one full word has been scanned.
+            if (right == n || arr[right] == ' ') {
+
+                // Reverse the characters for this word.
+                // The word is from index 'left' to 'right - 1'
+                reverse(arr, left, right - 1);
+
+                // Move 'left' to the start of the next word
+                // (right + 1 skips the space)
+                left = right + 1;
+            }
+        }
+
+        // Convert the modified character array back to a string
+        return new String(arr);
+    }
+
+    // This method reverses characters between indexes 'l' and 'r'
+    // using the classic two-pointer swapping technique.
+    private void reverse(char[] arr, int l, int r) {
+
+        // Keep swapping until the two pointers cross
+        while (l < r) {
+
+            // Swap characters at 'l' and 'r'
+            char temp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = temp;
+
+            // Move pointers inward
+            l++;
+            r--;
+        }
+    }
+}
+🧠 Short Explanation (in simple words)
+Convert the sentence into a char array.
+
+Use two pointers:
+
+left → start of the current word
+
+right → moves through the string
+
+Every time right hits a space or the end of string, you know:
+
+The word is between left and right - 1
+
+Reverse it
+
+Continue until all words are processed.
+
+✨ Key Idea
+You are not reversing the whole sentence, only the characters inside each word
+while keeping the word order the same
