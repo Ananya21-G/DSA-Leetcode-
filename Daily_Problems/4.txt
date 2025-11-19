@@ -1,0 +1,60 @@
+class Solution {
+
+    // This function finds the median of two already-sorted arrays.
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        int m = nums1.length, n = nums2.length;
+
+        // Create a new array big enough to hold all elements of nums1 and nums2
+        int[] merged = new int[m + n];
+
+        // i → pointer for nums1
+        // j → pointer for nums2
+        // k → pointer for merged array
+        int i = 0, j = 0, k = 0;
+
+        /*
+         * STEP 1: Merge the two sorted arrays into one big sorted array.
+         * We always take the smaller element from the front of both arrays.
+         * This is the same idea used in merge sort.
+         */
+        while (i < m && j < n) {
+            if (nums1[i] < nums2[j]) {
+                merged[k++] = nums1[i++];   // Take nums1 element
+            } else {
+                merged[k++] = nums2[j++];   // Take nums2 element
+            }
+        }
+
+        /*
+         * STEP 2: If nums1 still has leftover elements,
+         * copy all of them into the merged array.
+         */
+        while (i < m) {
+            merged[k++] = nums1[i++];
+        }
+
+        /*
+         * STEP 3: If nums2 still has leftover elements,
+         * copy all of them into the merged array.
+         */
+        while (j < n) {
+            merged[k++] = nums2[j++];
+        }
+
+        /*
+         * STEP 4: Find the median.
+         * If total number of elements is odd → middle element is the median.
+         * If it is even → median is the average of the two middle elements.
+         */
+        int total = m + n;
+
+        // If odd length, directly return the middle element
+        if (total % 2 == 1) {
+            return merged[total / 2];
+        }
+
+        // If even length, average the two middle elements
+        return (merged[total/2] + merged[total/2 - 1]) / 2.0;
+    }
+}
