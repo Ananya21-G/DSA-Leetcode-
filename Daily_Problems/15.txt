@@ -1,0 +1,132 @@
+Main Idea (in simple words)
+
+We want to pick three numbers from the list such that:
+
+number1 + number2 + number3 = 0
+
+
+But we must not repeat the same triplet again.
+
+To do this efficiently, we:
+
+Sort the array
+This helps us search faster and avoid duplicates easily.
+
+Fix one number, then
+
+Use two pointers to find the other two numbers.
+
+This reduces the work from O(n³) to O(n²).
+
+📘 Explanation of Each Part
+### Arrays.sort(nums);
+
+We sort the numbers first.
+Example:
+[-1, 0, 1, 2, -1, -4] → [-4, -1, -1, 0, 1, 2]
+
+Sorting helps us:
+
+Keep duplicates together
+
+Use two-pointer technique
+
+Ensure output triplets are unique
+
+### Outer Loop: for (int i = 0; i < nums.length - 2; i++)
+
+We choose the first number of the triplet.
+
+Example:
+First iteration → first number = -4
+Second iteration → first number = -1
+And so on.
+
+Why stop at length - 2?
+
+Because we need room for 2 more numbers.
+
+### Skip duplicates for the first number
+if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+
+If the first number is the same as the previous one, we skip it to avoid repeating the same answer.
+
+### Two Pointers Start
+
+After choosing the first number, we set:
+
+left = i + 1
+right = nums.length - 1
+
+
+left is the next number to the right
+
+right is the last number in the array
+
+We will move them inward to find combinations that sum to zero.
+
+⭐ Two-Pointer Logic
+
+We calculate:
+
+sum = nums[i] + nums[left] + nums[right]
+
+
+We have 3 cases:
+
+Case 1: sum == 0 → FOUND a triplet
+
+Example:
+-1 + 0 + 1 = 0
+
+We add it to the result list.
+
+Then we move both pointers:
+
+left++
+right--
+
+
+Because we already found the valid group for this position.
+
+Then skip duplicate numbers:
+while (left < right && nums[left] == nums[left - 1]) left++;
+while (left < right && nums[right] == nums[right + 1]) right--;
+
+
+This avoids repeated triplets.
+
+Case 2: sum < 0
+
+This means the total is too small, so we need a bigger number.
+
+We move left pointer rightward:
+
+left++;
+
+Case 3: sum > 0
+
+This means the total is too big, so we need a smaller number.
+
+We move right pointer leftward:
+
+right--;
+
+✔️ Finally
+
+Once all combinations have been checked, the list res contains all unique triplets whose sum is zero.
+
+We return it.
+
+🧠 Summary in Simple Words
+
+Sort the list
+
+Pick one number
+
+Use two pointers to find two more that complete the sum
+
+Skip duplicates
+
+Collect all unique triplets
