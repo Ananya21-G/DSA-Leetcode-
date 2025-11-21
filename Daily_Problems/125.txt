@@ -1,0 +1,53 @@
+class Solution {
+    public boolean isPalindrome(String s) {
+
+        // Two pointers: one starting from the left end, one from the right end
+        int left = 0;
+        int right = s.length() - 1;
+
+        // Keep checking characters while left pointer is before the right pointer
+        while (left < right) {
+
+            // Move the left pointer forward until it finds a letter or number
+            // (Ignore spaces, punctuation, symbols, etc.)
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+
+            // Move the right pointer backward until it finds a letter or number
+            // (Again ignore any non-alphanumeric characters)
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            // Compare both characters after converting them to lowercase
+            // If they are not equal → it's not a palindrome
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            // Move both pointers closer for the next comparison
+            left++;
+            right--;
+        }
+
+        // If all characters matched, then the string is a palindrome
+        return true;
+    }
+}
+✅ Super Simple Explanation (in English)
+Think of the string as a line of characters.
+
+You place one finger on the left, and another on the right.
+
+Move both fingers inward.
+
+Skip anything that is not a letter or number (like spaces, commas, symbols).
+
+Compare the characters:
+
+If they don’t match → not a palindrome.
+
+If you reach the middle without mismatch → it is a palindrome.
+
+This method is fast and clean because you don’t create any new strings
