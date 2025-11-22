@@ -1,0 +1,47 @@
+class Solution {
+
+    // This function returns an array of 'n' unique integers that add up to zero.
+    public int[] sumZero(int n) {
+        
+        // Create an array of size n where we'll store our numbers
+        int[] result = new int[n];
+        
+        // 'index' will tell us where to place the next number in the array
+        int index = 0;
+
+        /* 
+         * We fill the array using pairs of numbers that cancel each other out.
+         * For example:
+         *   -1 and +1
+         *   -2 and +2
+         *   -3 and +3
+         *
+         * Each pair adds up to 0, and all numbers stay unique.
+         *
+         * We only need n/2 pairs because each pair gives 2 numbers.
+         */
+        for (int i = 1; i <= n / 2; i++) {
+
+            // Insert a negative number
+            result[index++] = -i;
+
+            // Insert the corresponding positive number
+            result[index++] = i;
+        }
+
+        /*
+         * If 'n' is odd, one number is still missing after the pairs are added.
+         * For example:
+         *    n = 5  =>  2 pairs = 4 numbers, still need 1 more
+         *
+         * In this case, we simply add 0.
+         * Zero does not change the total sum, and it keeps all values unique.
+         */
+        if (n % 2 == 1) {
+            result[index] = 0;
+        }
+
+        // Return the final array containing n unique integers that sum to zero
+        return result;
+    }
+}
