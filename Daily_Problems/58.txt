@@ -1,0 +1,50 @@
+public class Solution {
+
+    public int lengthOfLastWord(String s) {
+
+        // Start from the last character of the string
+        int i = s.length() - 1;
+
+        // ----- STEP 1: Ignore extra spaces at the end -----
+        // Move backwards while the current character is a space.
+        // Example: "Hello World   "
+        // We skip the trailing spaces to reach 'd'.
+        while (i >= 0 && s.charAt(i) == ' ')
+            i--;
+
+        // This will store the length of the last word
+        int length = 0;
+
+        // ----- STEP 2: Count the letters of the last word -----
+        // Keep moving backwards and count characters
+        // until we either:
+        //   - hit a space
+        //   - or reach the beginning of the string
+        while (i >= 0 && s.charAt(i) != ' ') {
+            length++;  // count this character
+            i--;       // move one step backward
+        }
+
+        // Return how many characters we counted
+        return length;
+    }
+}
+🧠 Very Simple Explanation
+Think of the string like this:
+
+arduino
+Copy code
+"   fly me   to   the moon  "
+Move from the end to skip spaces
+→ ignore the empty space after "moon".
+
+Start counting letters
+→ count m-o-o-n = 4 characters.
+
+Stop when you hit a space
+→ that means the word ended.
+
+Return the count.
+
+🎯 Summary in One Line
+This code simply starts from the end, skips any spaces, then counts characters until it meets another space, giving you the length of the last word.
