@@ -1,0 +1,131 @@
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : s.toCharArray()) {
+            if(c == '(' || c == '{' || c== '[') {
+                stack.push(c);
+            }else{
+                if (stack.isEmpty()) return false;
+
+                char top = stack.pop();
+
+                if ((c ==')' && top != '(') ||
+                    (c =='}' && top != '{') ||
+                    (c ==']' && top != '[')) {
+                        return false;
+                    }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
+📘 Explanation in Simple Words
+✅ What this function does
+This function checks if a string containing brackets like
+(), {}, []
+is arranged in the correct opening and closing order.
+
+Examples:
+
+"()" → valid
+
+"([{}])" → valid
+
+"(]" → not valid
+
+"({)" → not valid
+
+🧠 How it works (simple logic)
+➤ Step 1: Create a stack
+A stack is like a pile of books.
+You can only add and remove from the top.
+
+java
+Copy code
+Stack<Character> stack = new Stack<>();
+We use it to keep track of opening brackets we have seen.
+
+➤ Step 2: Loop through each character of the string
+java
+Copy code
+for (char c : s.toCharArray()) {
+We look at each bracket one by one.
+
+➤ Step 3: If it's an opening bracket → PUSH it
+If the character is:
+
+'('
+
+'{'
+
+'['
+
+We push it on the stack.
+
+It's like saying:
+
+“Remember that we saw this opening bracket.”
+
+java
+Copy code
+stack.push(c);
+➤ Step 4: If it is a closing bracket
+For ), }, ]:
+
+Check if stack is empty
+
+If the stack is empty, that means there is no matching opening bracket.
+
+Example of wrong case:
+
+pgsql
+Copy code
+")("   → first char is ')', but nothing to match it
+Hence:
+
+java
+Copy code
+if (stack.isEmpty()) return false;
+Pop the top opening bracket
+
+java
+Copy code
+char top = stack.pop();
+This gives us the last opening bracket we saw.
+
+Check if the popped opening bracket matches the current closing one
+
+For example:
+
+If current = ')', top must be '('
+
+If current = '}', top must be '{'
+
+If current = ']', top must be '['
+
+If not matching → invalid.
+
+java
+Copy code
+if ((c ==')' && top != '(') ||
+    (c =='}' && top != '{') ||
+    (c ==']' && top != '[')) {
+        return false;
+}
+➤ Final Step: After loop ends
+If the stack is empty → everything matched properly → return true
+
+If stack still has something → some opening brackets didn’t get closed → return false
+
+java
+Copy code
+return stack.isEmpty();
+✔️ Short Layman Summary
+Push opening brackets onto a stack.
+
+For every closing bracket, check if it matches the most recent opening bracket.
+
+If anything doesn’t match → return false.
+
+If everything matches perfectly → return true.
