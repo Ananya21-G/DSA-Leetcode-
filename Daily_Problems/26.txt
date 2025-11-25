@@ -1,0 +1,55 @@
+class Solution {
+
+    // This function removes duplicates from a sorted array in-place.
+    // It returns how many unique numbers are present.
+    public int removeDuplicates(int[] nums) {
+
+        // i will point to the position where the last unique number is stored.
+        // We start with i = 0 because the first element is always unique.
+        int i = 0;
+        
+        // j will scan the array from the second element onward.
+        // We compare each nums[j] with nums[i] to see if it's a new unique number.
+        for (int j = 1; j < nums.length; j++) {
+
+            // If nums[j] is different from nums[i],
+            // it means nums[j] is a NEW unique number.
+            if (nums[j] != nums[i]) {
+
+                // Move i forward to make space to store the new unique number.
+                i++;
+
+                // Copy this new unique value into nums[i].
+                // This builds the "unique section" at the front of the array.
+                nums[i] = nums[j];
+            }
+        }
+
+        // i starts from 0, so number of unique elements = i + 1.
+        // The first (i+1) elements of nums now contain all unique numbers.
+        return i + 1;
+    }
+}
+🧠 Quick Intuition (Super Simple Explanation)
+Imagine you are arranging a line of students sorted by height.
+
+Some students with the same height appear multiple times.
+
+You want to make a line where each height appears only once.
+
+You don’t remove anyone physically.
+You simply move unique heights to the front of the line.
+
+Here’s how the pointers behave:
+
+i → points to the position where the next unique height should go
+
+j → scans each student one by one
+
+Whenever j finds a new height different from the one at i, you:
+
+move i forward
+
+put that new height at i
+
+At the end, everything before i+1 is unique.
