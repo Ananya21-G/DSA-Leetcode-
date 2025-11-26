@@ -1,0 +1,64 @@
+class Solution {
+    public int romanToInt(String s) {
+
+        // Step 1: Create a map to store the value of each Roman symbol.
+        // This is like a small dictionary where:
+        // 'I' means 1, 'V' means 5, 'X' means 10... etc.
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        // This will store our final answer
+        int total = 0;
+
+        // Step 2: Go through each character of the Roman numeral string
+        for (int i = 0; i < s.length(); i++) {
+
+            // Current Roman character's value
+            int value = map.get(s.charAt(i));
+
+            /* 
+             Step 3: Check if the next character is bigger than the current one.
+             Why? Because in Roman numerals:
+             - Normally values are added (e.g., VI = 5 + 1 = 6)
+             - But if a smaller value comes before a bigger one, you subtract it.
+               Example: IV = 4 because 5 (V) - 1 (I)
+               
+             So if the next value > current value:
+             → we subtract the current value from total.
+             Otherwise:
+             → we simply add the value.
+            */
+            if (i + 1 < s.length() && map.get(s.charAt(i + 1)) > value) {
+                total -= value;  // subtract in cases like IV, IX, XL, etc.
+            } 
+            else {
+                total += value;  // otherwise, add normally
+            }
+        }
+
+        // Step 4: Return the final integer result
+        return total;
+    }
+}
+💡 Simple Explanation in Words
+Roman numerals work mostly by adding numbers, except in special cases where a smaller number before a bigger number means subtraction.
+
+Example:
+
+XII → 10 + 1 + 1 = 12
+
+IX → 10 − 1 = 9
+
+MCMXCIV → 1000 + (900) + (90) + (4) = 1994
+
+This code goes letter by letter:
+
+If next letter is bigger → subtract
+
+Otherwise → add
