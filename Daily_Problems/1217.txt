@@ -1,0 +1,45 @@
+int evens = 0, odds = 0;  
+// We create two counters:
+// evens → number of chips placed at even positions
+// odds  → number of chips placed at odd positions
+
+for (int p : position) {  
+    // Loop through every chip’s position in the array
+    if (p % 2 == 0)  
+        evens++;      // If position is even, increase evens count
+    else  
+        odds++;       // If position is odd, increase odds count
+}
+
+// Key idea:
+// Moving chips between positions of SAME parity (even→even or odd→odd) has cost 0.
+// Only moving between different parities costs 1 per chip.
+//
+// So we choose the cheaper parity to move all chips to.
+// This cost will be equal to the number of chips on the minority side.
+return Math.min(evens, odds);
+// Return the minimum number of chips that need to switch parity.
+// That will be the minimum total cost.
+🎯 Simple Explanation
+Chips on even positions can reach any other even position for free.
+
+Chips on odd positions can reach any other odd position for free.
+
+Only when you switch from even ↔ odd, you pay a cost of 1.
+
+So:
+
+If you have more chips on even, move all chips to an even position.
+
+If you have more chips on odd, move all chips to an odd position.
+
+The minimum cost = number of chips on the smaller parity group.
+
+✔ Example
+If position = [1,2,3]
+
+Odds = chips at 1, 3 → 2 chips
+
+Evens = chip at 2 → 1 chip
+
+Move the smaller group (evens) to odd → cost = 1.
