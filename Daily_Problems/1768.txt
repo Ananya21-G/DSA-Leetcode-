@@ -1,0 +1,69 @@
+class Solution {
+    public String mergeAlternately(String word1, String word2) {
+
+        // StringBuilder is used to build the final merged string efficiently
+        StringBuilder sb = new StringBuilder();
+
+        // i = pointer for word1, j = pointer for word2
+        int i = 0, j = 0;
+
+        // Store lengths of both words
+        int n1 = word1.length();
+        int n2 = word2.length();
+
+        /*
+         * STEP 1:
+         * Keep taking one letter from word1 and one from word2
+         * as long as BOTH still have letters left.
+         *
+         * Example:
+         * word1 = "abc"
+         * word2 = "pqr"
+         *
+         * We pick:
+         * a (from word1)
+         * p (from word2)
+         * b
+         * q
+         * c
+         * r
+         */
+        while (i < n1 && j < n2) {
+            sb.append(word1.charAt(i));  // take a letter from word1
+            sb.append(word2.charAt(j));  // take a letter from word2
+            i++;
+            j++;
+        }
+
+        /*
+         * STEP 2:
+         * If word1 is longer, it may still have leftover letters.
+         * Example: word1 = "abcd", word2 = "pq"
+         * After alternating, we still have "cd" left, so we add it.
+         */
+        if (i < n1) {
+            sb.append(word1.substring(i));  // add remaining part of word1
+        }
+
+        /*
+         * STEP 3:
+         * If word2 is longer, it may have leftover letters.
+         * Example: word1 = "ab", word2 = "pqrs"
+         * After alternating, "rs" is left — so we add it.
+         */
+        if (j < n2) {
+            sb.append(word2.substring(j));  // add remaining part of word2
+        }
+
+        // Return the final merged string
+        return sb.toString();
+    }
+}
+🧠 Layman Summary (Super Simple)
+Think of the two words as two queues.
+
+You pick one letter from word1, then one from word2, again and again.
+
+If one finishes early, just stick the remaining letters of the other at the end.
+
+Return the final result
