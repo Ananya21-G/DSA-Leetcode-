@@ -1,0 +1,42 @@
+class Solution {
+
+    public int maxProduct(int[] nums) {
+
+        // We need to find the two largest numbers in the array.
+        // Let max1 = largest, max2 = second largest.
+        int max1 = 0, max2 = 0;
+
+        // Loop through each number in the array
+        for (int num : nums) {
+
+            // If current number is greater than the largest found so far
+            if (num > max1) {
+                // The old largest becomes second largest
+                max2 = max1;
+
+                // Update largest
+                max1 = num;
+
+            // Else if current number is not the largest,
+            // but bigger than the second largest
+            } else if (num > max2) {
+
+                // Update second largest
+                max2 = num;
+            }
+        }
+
+        // After finding the two largest numbers:
+        // Apply the formula (max1 - 1) * (max2 - 1)
+        return (max1 - 1) * (max2 - 1);
+    }
+}
+✅ Quick Summary of the Approach
+The maximum product comes from the two largest numbers.
+
+Instead of sorting (O(n log n)), we find them in one pass (O(n)).
+
+Then apply the formula:
+
+
+(max1−1)∗(max2−1)
