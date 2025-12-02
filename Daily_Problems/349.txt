@@ -1,0 +1,77 @@
+What does this code do?
+
+It finds the common numbers between two arrays.
+
+Example:
+nums1 = [1, 2, 2, 1]
+nums2 = [2, 2]
+
+Both arrays contain 2, so the answer is:
+→ [2]
+
+But the answer must contain unique values only (no duplicates).
+🔹 Step 1: Store all unique numbers from nums1
+
+We use a HashSet (a box that never stores duplicates).
+If nums1 = [1,2,2,1], the set becomes:
+→ {1, 2}
+
+🔹 Step 2: Check nums2 and find common numbers
+
+For each number in nums2:
+
+If it also exists in nums1’s set → add it to result set.
+
+The result set also holds unique values only.
+
+🔹 Step 3: Convert the result set to an array
+
+Because we must return an integer array, not a set.
+Why use HashSet?
+
+It removes duplicates automatically
+
+It allows very fast checking (O(1) time)
+
+This makes the solution efficient and clean.
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+
+        // A HashSet stores unique values only. 
+        // We use it to store all unique values from nums1.
+        Set<Integer> set1 = new HashSet<>();
+        for (int n : nums1) {
+            set1.add(n);   // Add each number from nums1 (duplicates ignored automatically)
+        }
+
+        // This set will store the intersection (common elements)
+        Set<Integer> resultSet = new HashSet<>();
+
+        // Check each number in nums2. 
+        // If nums2 contains something that is also in nums1 (set1), add it to result.
+        for (int n : nums2) {
+            if (set1.contains(n)) {
+                resultSet.add(n);  // Add only unique common elements
+            }
+        }
+
+        // Convert the set (unique values) to an array because the function expects int[]
+        int[] result = new int[resultSet.size()];
+        int i = 0;
+        for (int val : resultSet) {
+            result[i++] = val;
+        }
+
+        return result;   // Return the array of unique intersection values
+    }
+}
+Summary for future you
+
+Use a set to store unique numbers from the first array
+
+Use another set to store common elements
+
+Convert the set to an array
+
+Done!
