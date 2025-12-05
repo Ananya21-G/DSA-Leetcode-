@@ -1,0 +1,107 @@
+✅ Layman Explanation of the Code
+class Solution {
+    public int thirdMax(int[] nums) {
+        Long first = null, second = null, third = null;
+
+✔ What this means:
+
+We want to keep track of the top 3 distinct maximum numbers.
+
+So we create:
+
+first → the largest number
+
+second → the second-largest distinct number
+
+third → the third-largest distinct number
+
+We use Long (not int) so that we can safely store values and also allow null initially (meaning “not assigned yet”).
+
+        for (int n : nums) {
+            long num = n;
+
+✔ What this does:
+
+We loop through every number in the array.
+
+num just converts n into a long for comparison.
+
+            if (first != null && num == first ||
+                second != null && num == second ||
+                third != null && num == third) continue;
+
+✔ Meaning in simple terms:
+
+If we have already seen this number, we skip it.
+We want distinct maximums — duplicates do not count.
+
+Example:
+Array: [2, 2, 3] → the two 2s should not be treated separately.
+
+            if (first == null || num > first) {
+                third = second;
+                second = first;
+                first = num;
+
+✔ Meaning:
+
+If this number is bigger than the current biggest (first):
+
+The old second becomes third
+
+The old first becomes second
+
+This new number becomes first
+
+💡 Example:
+Numbers seen so far: [10, 7, 5]
+Then new number = 12
+→ 12 becomes first
+→ 10 moves to second
+→ 7 moves to third
+
+            } else if (second == null || num > second) {
+                third = second;
+                second = num;
+
+✔ Meaning:
+
+If it is not the biggest, but bigger than the second biggest:
+
+Move old second to third
+
+Set this number as new second
+
+💡 Example:
+Seen: first=12, second=10
+New number = 11
+→ second becomes 11
+→ third becomes 10
+
+            } else if (third == null || num > third) {
+                third = num;
+            }
+        }
+
+✔ Meaning:
+
+If it’s not the 1st or 2nd largest, but still bigger than the 3rd largest, update third.
+
+        return third == null ? first.intValue() : third.intValue();
+    }
+}
+
+✔ Final Decision:
+
+If we found a third distinct maximum, return it.
+
+If not (means array had fewer than 3 distinct numbers), return the largest number.
+
+Example:
+
+Input: [3, 2, 1]
+→ third max = 1
+
+Input: [1, 2]
+→ Only two distinct values.
+→ Return the biggest: 2
