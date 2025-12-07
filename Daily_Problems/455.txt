@@ -1,0 +1,112 @@
+Problem: Assign Cookies (Greedy Algorithm)
+Goal
+
+Given:
+
+g[i] → greed factor of the i-th child (minimum cookie size required)
+
+s[j] → size of the j-th cookie
+
+Each child can get at most one cookie, and a cookie can be used only once.
+
+Objective: Maximize the number of content children.
+
+Key Idea (Greedy Strategy)
+
+To satisfy as many children as possible, we:
+
+Try to satisfy the least greedy child first
+
+Use the smallest cookie that can satisfy them
+
+This prevents wasting large cookies on small needs.
+
+Algorithm Steps
+
+Sort the greed array g in ascending order
+
+Sort the cookie array s in ascending order
+
+Use two pointers:
+
+i → points to children
+
+j → points to cookies
+
+Compare current child and cookie:
+
+If cookie size ≥ child greed → assign cookie, move both pointers
+
+Else → cookie too small, move cookie pointer only
+
+Count every successful assignment
+
+Why Sorting Works
+
+Sorting helps us match the smallest possible cookie to the least greedy child
+
+This ensures optimal use of cookies
+
+Time & Space Complexity
+
+Time Complexity:
+O(n log n + m log m)
+(sorting both arrays)
+
+Space Complexity:
+O(1) extra space (in-place sorting)
+
+Example Walkthrough
+Example 1
+g = [1, 2, 3]
+s = [1, 1]
+
+
+After sorting:
+
+g = [1, 2, 3]
+s = [1, 1]
+
+
+Assignments:
+
+child 1 ← cookie 1 ✅
+
+child 2 ← cookie 1 ❌
+
+✅ Output: 1
+
+Example 2
+g = [1, 2]
+s = [1, 2, 3]
+
+
+After sorting:
+
+g = [1, 2]
+s = [1, 2, 3]
+
+
+Assignments:
+
+child 1 ← cookie 1 ✅
+
+child 2 ← cookie 2 ✅
+
+✅ Output: 2
+
+Concept Used
+
+✅ Greedy Algorithm
+
+✅ Two Pointers
+
+✅ Sorting
+
+Important Exam Tip
+
+This problem is identical in logic to:
+
+2410. Maximum Matching of Players With Trainers
+
+Same greedy + two-pointer strategy ✅
