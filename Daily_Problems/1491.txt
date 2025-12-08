@@ -1,0 +1,91 @@
+Problem in Simple Words
+
+You are given salaries of employees.
+You must:
+
+Remove the lowest salary
+
+Remove the highest salary
+
+Find the average of the remaining salaries
+
+Key Idea
+
+Instead of sorting the array, we can do everything in one loop:
+
+Find minimum salary
+
+Find maximum salary
+
+Find total sum
+
+Then subtract the minimum and maximum from the sum and divide by the remaining count.
+
+What Each Variable Means
+
+min → stores the smallest salary
+
+max → stores the largest salary
+
+sum → stores the sum of all salaries
+
+Step-by-Step Working
+Step 1: Initialize values
+
+Assume the first salary is both minimum and maximum initially.
+
+Example:
+salary = [4000, 3000, 1000, 2000]
+
+min = 4000
+max = 4000
+sum = 0
+
+Step 2: Loop through salaries
+
+For every salary:
+
+Add it to sum
+
+Update min if current salary is smaller
+
+Update max if current salary is larger
+
+After loop:
+
+sum = 10000
+min = 1000
+max = 4000
+
+Step 3: Remove min and max from sum
+sum - min - max = 10000 - 1000 - 4000 = 5000
+
+Step 4: Divide by remaining employees
+
+We removed 2 salaries (min & max):
+
+remaining employees = salary.length - 2
+= 4 - 2 = 2
+
+Step 5: Final average
+average = 5000 / 2 = 2500.0
+
+Why We Use (double)
+
+Java divides integers as integers.
+Casting to double ensures we get decimal precision.
+
+Final Formula to Remember (Exam Gold ✨)
+Average = (Total Sum − Min − Max) / (n − 2)
+
+Time & Space Complexity (Exam Ready)
+
+Time Complexity: O(n)
+(Single pass through array)
+
+Space Complexity: O(1)
+(No extra data structures used)
+
+One-Line Memory Trick 🧠
+
+“Add everything, remove extremes, divide by remaining.”
