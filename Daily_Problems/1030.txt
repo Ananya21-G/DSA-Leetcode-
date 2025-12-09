@@ -1,0 +1,103 @@
+What is the problem asking?
+
+You have a grid (matrix) with:
+
+rows number of rows
+
+cols number of columns
+
+You are standing at one cell:
+(rCenter, cCenter)
+
+Your task is to list all cells of the matrix and sort them based on how far they are from your position.
+
+Distance is calculated using:
+
+|row difference| + |column difference|
+
+
+This is called Manhattan distance.
+
+✅ What does the code do overall?
+
+Store all cells of the matrix
+
+Sort them by their distance from the center
+
+Return the sorted list
+
+✅ Step-by-step explanation (simple words)
+🔹 Step 1: Create space to store all cells
+int[][] ans = new int[rows * cols][2];
+
+
+A matrix with rows × cols cells has rows * cols total positions
+
+Each position needs 2 values → row and column
+
+Example: [1, 2] means row 1, column 2
+
+🔹 Step 2: Put every cell into the array
+for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+        ans[idx][0] = i;
+        ans[idx][1] = j;
+        idx++;
+    }
+}
+
+
+Loop through the entire matrix
+
+Store each cell’s coordinates
+
+If rows = 2 and cols = 3, stored cells will be:
+
+[0,0], [0,1], [0,2],
+[1,0], [1,1], [1,2]
+
+🔹 Step 3: Sort cells by distance
+Arrays.sort(ans, (a, b) ->
+    Math.abs(a[0] - rCenter) + Math.abs(a[1] - cCenter)
+  - Math.abs(b[0] - rCenter) - Math.abs(b[1] - cCenter)
+);
+
+
+For each cell:
+
+Calculate distance from (rCenter, cCenter)
+
+Compare distances
+
+Cells closer to the center come first
+
+If two cells have the same distance, any order is allowed
+
+✅ Distance example
+
+If center is (0,1) and a cell is (1,0):
+
+Distance = |1 - 0| + |0 - 1|
+          = 1 + 1
+          = 2
+
+✅ Final output
+
+The method returns:
+
+int[][]
+
+
+Each row contains:
+
+[row, column]
+
+
+Ordered from nearest to farthest cell from the center.
+
+✅ Why this solution works well?
+
+✔ Simple logic
+✔ Easy to understand
+✔ Works within constraints (max 10,000 cells)
+✔ Uses built-in Java sorting
