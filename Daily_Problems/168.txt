@@ -1,0 +1,148 @@
+✅ What this code is trying to do (big picture)
+
+This code converts a number into an Excel column name.
+
+Examples:
+
+1 → A
+
+26 → Z
+
+27 → AA
+
+28 → AB
+
+Excel works like alphabets instead of digits, and it starts counting from 1, not 0. That’s the only tricky part.
+
+✅ class Solution {
+
+Just the class required by LeetCode. Nothing special here.
+
+✅ public String convertToTitle(int columnNumber) {
+
+This function:
+
+Takes a number (columnNumber)
+
+Returns a String (Excel column title)
+
+Example input: 28
+Example output: "AB"
+
+✅ StringBuilder result = new StringBuilder();
+
+We create an empty object called result to store letters one by one.
+
+Why not a normal string?
+👉 Because strings are slow to modify, StringBuilder is faster and better for appending characters.
+
+✅ while (columnNumber > 0) {
+
+We keep running this loop until the number becomes 0.
+
+Each loop:
+
+Finds one letter
+
+Removes that part from the number
+
+✅ columnNumber--;
+
+⚠ VERY IMPORTANT LINE
+
+Excel columns start at:
+
+A = 1
+But programming indexes start at:
+
+A = 0
+
+So we subtract 1 to match:
+
+1 → 0 (A)
+26 → 25 (Z)
+
+
+Without this line, the code will give wrong answers.
+
+✅ columnNumber % 26
+
+This gives a number between 0 and 25.
+
+Example:
+
+0 → A
+
+1 → B
+
+25 → Z
+
+This is how we decide which letter to add.
+
+✅ (char)('A' + columnNumber % 26)
+
+This converts the number into a letter.
+
+Examples:
+
+'A' + 0 → 'A'
+
+'A' + 1 → 'B'
+
+'A' + 25 → 'Z'
+
+So this line finds the correct Excel letter.
+
+✅ result.append(...)
+
+Adds the letter to result.
+
+⚠ Important:
+We are adding letters from right to left.
+
+Example for 28:
+
+First letter added → 'B'
+
+Then 'A'
+So result becomes "BA"
+
+✅ columnNumber /= 26;
+
+This removes the last processed letter and moves to the next digit (like moving left in a number).
+
+Example:
+
+28 → 27 → 1
+
+✅ } (end of loop)
+
+The loop continues until columnNumber becomes 0.
+
+✅ return result.reverse().toString();
+
+Because letters were added backwards, we reverse them at the end.
+
+Example:
+
+"BA" → "AB"
+
+
+Then convert it to a normal string and return it.
+
+🎯 Final Intuition (One-Line Memory Trick)
+
+👉 This code keeps taking the last Excel letter, converts it to a character, stores it, and removes it from the number until nothing is left.
+
+✅ Example Walkthrough: columnNumber = 28
+Step	   Value	    Letter Found	result
+1	       28 → 27	        B	          "B"
+2	       1 → 0	        A	          "BA"
+reverse	   —	            —	          "AB"
+
+
+Key Things to Remember
+
+✔ Excel columns are 1-based, not 0-based
+✔ Always subtract 1 before % 26
+✔ Build the answer backwards, then reverse
