@@ -1,0 +1,52 @@
+📝 Layman Terms Documentation
+
+This function reverses a string, but remember: the string is given as a character array (like ['h','e','l','l','o']).
+
+🔍 What the function wants to do
+
+Turn something like:
+
+["h","e","l","l","o"]
+
+
+into:
+
+["o","l","l","e","h"]
+
+
+— without creating a new array (this is called "in-place").
+
+🔧 How the code works (simple explanation)
+1️⃣ We use two fingers (pointers)
+
+One finger starts at the beginning of the array → left = 0
+
+Another finger starts at the end → right = s.length - 1
+
+Imagine pointing to both ends of the word.
+
+2️⃣ Swap the characters
+
+Whatever character the left finger points to, swap it with what the right finger points to.
+
+Example for "hello":
+
+Left points to	Right points to	Swap result
+h	o	o e l l h
+3️⃣ Move the fingers inward
+
+Left finger moves right → left++
+
+Right finger moves left → right--
+
+This continues until the fingers meet or cross.
+
+4️⃣ Loop stops
+
+When left >= right, we’re done.
+At that point, the entire array has been reversed.
+
+🧠 Why this works
+
+We are swapping the outer characters first, then slowly moving inward until the whole string is reversed.
+We never create another array — so memory usage stays O(1).
