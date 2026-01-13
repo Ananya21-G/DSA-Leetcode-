@@ -1,0 +1,138 @@
+What this code is doing (in 1 line)
+
+We are finding the lowest horizontal line y = Y where the total square-area below the line becomes exactly half of the total square-area.
+
+✅ Fully documented Java code (Layman-friendly)
+class Solution {
+
+    // Main function required by LeetCode
+    public double separateSquares(int[][] squares) {
+
+        // total = total area of ALL squares combined (overlap is counted multiple times)
+        double total = 0.0;
+
+        // low and high will represent the range in which the answer Y must lie.
+        // low = lowest starting y of any square
+        // high = highest ending y (top edge) of any square
+        double low = Double.MAX_VALUE;
+        double high = 0.0;
+
+        // -----------------------------
+        // Step 1: Calculate total area and determine search boundaries
+        // -----------------------------
+        for (int[] sq : squares) {
+
+            // sq = [x, y, l]
+            // we don't need x at all because the line is horizontal and area depends on vertical cutting only
+            double y = sq[1];  // bottom y-coordinate of square
+            double l = sq[2];  // side length
+
+            // area of a square = l*l
+            total += l * l;
+
+            // update the lowest and highest possible Y
+            low = Math.min(low, y);       // minimum bottom among all squares
+            high = Math.max(high, y + l); // maximum top among all squares
+        }
+
+        // We want area below the line = half of total area
+        double target = total / 2.0;
+
+        // -----------------------------
+        // Step 2: Binary Search for the minimum Y
+        // -----------------------------
+        // Why binary search?
+        // Because if we move the line up, the area below always increases (never decreases).
+        // So it's a monotonic function -> perfect for binary search.
+        for (int iter = 0; iter < 70; iter++) {
+
+            // mid = our trial line position
+            double mid = (low + high) / 2.0;
+
+            // Find how much area lies BELOW the line y = mid
+            double below = areaBelow(squares, mid);
+
+            // If below area is still less than half,
+            // it means our line is too low → we need to move it UP
+            if (below < target) {
+                low = mid;
+            }
+            // Otherwise, below area is already >= half,
+            // so we might have gone too high, and we want the MINIMUM possible Y,
+            // so we move the line DOWN
+            else {
+                high = mid;
+            }
+        }
+
+        // At the end, low and high are extremely close.
+        // high gives the smallest Y where below area >= target.
+        return high;
+    }
+
+    // -----------------------------
+    // Helper function:
+    // Calculates total area of all squares below a horizontal line y = Y
+    // -----------------------------
+    private double areaBelow(int[][] squares, double Y) {
+
+        // sum will store the total area below the line
+        double sum = 0.0;
+
+        // Go square by square and add each one’s contribution below the line
+        for (int[] sq : squares) {
+
+            double y = sq[1];  // bottom of square
+            double l = sq[2];  // side length
+
+            // Case 1: Line is below the square completely
+            // Example: square is from y=5..7, and line is at Y=3
+            // Nothing from this square is below the line.
+            if (Y <= y) {
+                continue;
+            }
+
+            // Case 2: Line is above the square completely
+            // Example: square is from y=5..7, and line is at Y=10
+            // The entire square is below the line.
+            else if (Y >= y + l) {
+                sum += l * l;
+            }
+
+            // Case 3: Line cuts through the square
+            // Example: square is from y=5..7, and line is at Y=6
+            // The height below = (Y - y)
+            // The width is always = l
+            // So area below = l * (Y - y)
+            else {
+                sum += l * (Y - y);
+            }
+        }
+
+        return sum;
+    }
+}
+
+✅ Mental model (super simple)
+
+Think of each square like a vertical block.
+
+When you move the line up:
+
+you include more of the square below
+
+and less above
+
+So “area below” increases smoothly → that’s why binary search works.
+
+✅ Why we didn’t care about x
+
+Because the line is horizontal, it cuts by height only.
+
+Even if squares overlap in x-direction, we count each square’s contribution separately anyway.
+
+✅ Why 70 iterations?
+
+Each binary search step cuts the answer range in half.
+
+After ~70 cuts, the remaining error becomes insanely tiny (much smaller than 10^-5), so it’s safe.
