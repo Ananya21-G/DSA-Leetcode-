@@ -1,0 +1,76 @@
+LeetCode 169 — Majority Element (Documentation)
+✅ Problem Summary
+
+Given an integer array nums, return the element that appears more than ⌊n/2⌋ times.
+It is guaranteed that such an element always exists.
+
+🧠 Brain Note (Memory Anchor)
+
+✅ Pattern name: Boyer–Moore Voting Algorithm
+✅ When to use: When an element appears more than n/2 times (majority guaranteed)
+✅ Core idea: Keep a candidate and cancel out different elements using a count
+
+✅ Approach Used: Boyer–Moore Voting
+Key Variables
+
+candidate → the current possible majority element
+
+count → balance of votes for the candidate
+
+Logic
+
+Start with count = 0
+
+Traverse each number num:
+
+If count == 0, make num the new candidate
+
+If num == candidate, increase count
+
+Else decrease count (cancels a vote)
+
+At the end, candidate is the majority element
+
+✅ Why This Works
+
+Since the majority element appears more than half, it cannot be completely cancelled by other elements.
+So it will always survive as the final candidate.
+
+⏱ Complexity
+
+✅ Time: O(n) (single pass through array)
+✅ Space: O(1) (only two variables)
+
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        // candidate will store the possible majority element
+        int candidate = 0;
+
+        // count tracks the "vote balance" for the current candidate
+        int count = 0;
+
+        // Traverse each number in the array
+        for (int num : nums) {
+
+            // If count is 0, we pick the current number as the new candidate
+            // (because the previous candidate got fully cancelled out)
+            if (count == 0) {
+                candidate = num;
+            }
+
+            // If current number matches candidate, give it a vote (+1)
+            if (candidate == num) {
+                count++;
+            }
+            // Otherwise, cancel one vote (-1)
+            else {
+                count--;
+            }
+        }
+
+        // Since majority element is guaranteed to exist,
+        // the final candidate is the answer
+        return candidate;
+    }
+}
