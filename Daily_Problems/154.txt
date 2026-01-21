@@ -1,0 +1,73 @@
+LeetCode 154 — Find Minimum in Rotated Sorted Array II (Duplicates Allowed)
+🧠 Brain Note (3 lines)
+
+Pattern: Binary Search on Rotated Sorted Array (with duplicates)
+When to use: Rotated sorted array, need min/target efficiently, duplicates possible
+Core idea: Compare mid with right; duplicates force right-- (worst-case O(n))
+
+✅ Problem Summary
+
+Given a sorted array rotated between 1..n times with duplicates, return the minimum element.
+
+Example:
+[2,2,2,0,1] → 0
+
+🔍 Key Idea
+
+Use binary search with pointers:
+
+l = 0, r = n-1
+
+compare nums[mid] with nums[r]
+
+This helps identify whether mid lies in the left (higher) part or right (lower) part of the rotated array.
+
+✅ Decision Rules
+
+Let mid = l + (r-l)/2
+
+1) If nums[mid] > nums[r]
+
+✅ Minimum is in the right half
+➡️ l = mid + 1
+
+2) If nums[mid] < nums[r]
+
+✅ Minimum is in the left half (including mid)
+➡️ r = mid
+
+3) If nums[mid] == nums[r] (duplicates case)
+
+⚠️ Cannot decide the side
+➡️ r-- (safe shrink)
+
+✅ Java Code (Reference)
+class Solution {
+    public int findMin(int[] nums) {
+        int l = 0, r = nums.length - 1;
+
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+
+            if (nums[mid] > nums[r]) {
+                l = mid + 1;
+            } else if (nums[mid] < nums[r]) {
+                r = mid;
+            } else {
+                r--; // duplicates: can't decide, shrink safely
+            }
+        }
+
+        return nums[l];
+    }
+}
+
+⏱️ Time & Space Complexity
+
+✅ Best / typical: O(log n)
+⚠️ Worst case: O(n) (when duplicates prevent halving, e.g. [1,1,1,1,1])
+✅ Space: O(1)
+
+🎯 Why duplicates change runtime?
+
+Because when nums[mid] == nums[r], we lose information, so we can’t discard half confidently — we only do r--, which may take n steps.
