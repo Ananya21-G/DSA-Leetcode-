@@ -1,0 +1,213 @@
+LeetCode: Split Array Largest Sum (Minimize the Maximum)
+✅ Problem Summary (in 1 line)
+
+Split nums into exactly k non-empty contiguous subarrays such that the largest subarray sum is minimized, and return that minimum value.
+
+🧠 Brain Note (3 lines)
+
+Pattern: Binary Search on Answer (Minimize Maximum)
+
+When to use: “Split into k parts” + “minimize the largest / worst”
+
+Core idea: Guess max allowed sum X, greedily split → check if possible in ≤ k parts
+
+✅ Observations
+What are we minimizing?
+
+We are minimizing:
+
+max
+⁡
+(
+sum of each subarray
+)
+max(sum of each subarray)
+
+So we want the “worst” subarray sum to be as small as possible.
+
+Important bounds
+
+Minimum possible answer = max(nums)
+
+because some subarray must contain the biggest element
+
+Maximum possible answer = sum(nums)
+
+if we don’t split at all (one big subarray)
+
+So the answer lies in:
+
+[
+𝑚
+𝑎
+𝑥
+(
+𝑛
+𝑢
+𝑚
+𝑠
+)
+,
+  
+𝑠
+𝑢
+𝑚
+(
+𝑛
+𝑢
+𝑚
+𝑠
+)
+]
+[max(nums),sum(nums)]
+✅ Key Trick: Binary Search on the Answer
+
+We binary search on the value “largest subarray sum allowed”.
+
+Let mid = candidate max sum.
+
+Now we ask:
+
+✅ Can we split nums into at most k subarrays so that each subarray sum ≤ mid?
+
+If yes → try smaller (move left)
+If no → need bigger (move right)
+
+✅ Greedy Feasibility Check (Most Important Part)
+✅ canSplit(nums, k, maxSum) logic
+
+We greedily build subarrays:
+
+Keep adding elements to current subarray sum
+
+If adding next element makes sum > maxSum
+
+start a new subarray
+
+increase subarray count
+
+If subarray count exceeds k, return false
+
+Why greedy works?
+
+Because to minimize number of subarrays, you should pack as many elements as possible into the current subarray before starting a new one.
+
+✅ Java Code (Final)
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        long left = 0, right = 0;
+
+        // left = max(nums), right = sum(nums)
+        for (int x : nums) {
+            left = Math.max(left, x);
+            right += x;
+        }
+
+        while (left < right) {
+            long mid = left + (right - left) / 2;
+
+            if (canSplit(nums, k, mid)) {
+                right = mid;      // mid is possible → try smaller
+            } else {
+                left = mid + 1;   // mid not possible → increase
+            }
+        }
+
+        return (int) left;
+    }
+
+    private boolean canSplit(int[] nums, int k, long maxSum) {
+        int subarrays = 1;
+        long currSum = 0;
+
+        for (int x : nums) {
+            if (currSum + x <= maxSum) {
+                currSum += x;
+            } else {
+                subarrays++;
+                currSum = x;
+
+                if (subarrays > k) return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+🧩 Walkthrough Example (nums = [7,2,5,10,8], k = 2)
+Bounds:
+
+left = max(nums) = 10
+
+right = sum(nums) = 32
+
+Binary search mid values:
+
+Try mid = 21
+
+Greedy split:
+
+[7,2,5] sum=14
+
+add 10 → 24 (too much) → new subarray
+
+[10,8] sum=18
+
+Subarrays = 2 ✅ valid → try smaller
+
+Try mid = 18
+
+Greedy split:
+
+[7,2,5] sum=14
+
+add 10 → 24 (too much) → new subarray
+
+[10,8] sum=18
+
+Subarrays = 2 ✅ valid → try smaller
+
+Try mid = 17
+
+[7,2,5] sum=14
+
+add 10 → 24 too much → new subarray
+
+[10] sum=10
+
+add 8 → 18 too much → new subarray
+
+[8]
+
+Subarrays = 3 ❌ not valid → need bigger
+
+✅ Answer becomes 18
+
+✅ Why ≤ k subarrays works (important confusion!)
+
+In feasibility check we ensure it can be done in at most k subarrays.
+
+Because:
+
+If we can split into fewer than k, we can always split more by breaking a subarray further (without increasing maxSum).
+
+Example: if k=5 and we can do it in 3 subarrays, we can split some subarray into smaller ones.
+
+So <= k means possible.
+
+✅ Complexity
+
+canSplit() = O(n)
+
+Binary search runs about log(sum(nums))
+✅ Total: O(n log(sum(nums)))
+
+Space: O(1)
+
+✅ Common Mistakes (Quick Checklist)
+
+✅ Use long for sums (because sum(nums) can overflow int)
+✅ left = max element, not 0
+✅ Greedy split based on “if exceeds mid”
+✅ Return left at the end (binary search converges)
