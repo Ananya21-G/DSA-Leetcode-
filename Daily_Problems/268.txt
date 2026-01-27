@@ -1,0 +1,139 @@
+🧠 Brain Note (Memory Anchor)
+
+Pattern name: Missing element from fixed range
+
+When to use: One missing number, no duplicates, known bounds
+
+Core idea: Compare ideal complete set with given set → isolate the difference
+
+🧩 Key Observations
+
+The range is fixed: 0 → n
+
+Total numbers that should exist: n + 1
+
+Numbers actually present: n
+
+Therefore, exactly one number is missing
+
+Order of elements does not matter
+
+This tells us we should aggregate information, not sort or search.
+
+🛠️ Solution Strategy 1: Sum Difference (Intuitive)
+Idea
+
+The numbers from 0 to n form an arithmetic progression
+
+The total sum of this range is fixed
+
+The array’s sum is smaller by exactly the missing number
+
+Logic
+missing number = (sum of 0..n) − (sum of array)
+
+Why this works
+
+Every number except the missing one contributes equally to both sums.
+
+When to use
+
+Easy to explain
+
+Constraints are small enough to avoid overflow
+
+🛠️ Solution Strategy 2: XOR Cancellation (Interview-Grade)
+XOR properties you must remember
+
+x ^ x = 0 → same values cancel
+
+x ^ 0 = x → zero does nothing
+
+XOR is order independent
+
+Core Insight
+
+If you XOR:
+
+all numbers from 0 to n
+
+with all numbers in the array
+
+Then:
+
+every number that appears twice cancels out
+
+the missing number appears once → remains
+
+Mental Model
+
+Think of XOR as pair cancellation:
+
+Expected set: 0,1,2,3,...,n
+Actual set:   same, except one missing
+
+Everything cancels except the missing number
+
+Why XOR is powerful
+
+No risk of overflow
+
+Truly O(1) space
+
+Clean and elegant
+
+Frequently expected in interviews
+
+🧪 Example Walkthrough (XOR)
+
+Input:
+
+nums = [3, 0, 1]
+n = 3
+
+
+XOR everything:
+
+(0 ^ 1 ^ 2 ^ 3) ^ (3 ^ 0 ^ 1)
+
+
+Pairs cancel:
+
+0 cancels
+1 cancels
+3 cancels
+→ left with 2
+
+
+Answer: 2
+
+🧠 Pattern Recognition Checklist
+
+Ask yourself these questions:
+
+Is the range fixed and known?
+
+Is exactly one value missing?
+
+Are there no duplicates?
+
+Do I need O(1) space?
+
+If yes → Sum or XOR pattern
+
+🔗 Related Problems (Same Pattern)
+
+Find the Duplicate Number
+
+Missing Numbers in Array
+
+Single Number
+
+Find XOR of Range
+
+(These all rely on cancellation or comparison vs ideal state)
+
+🧠 Final One-Line Insight (Sticky Memory)
+
+When the problem gives you a perfect world (0..n) and a broken world (array),
+don’t search — subtract or cancel.
