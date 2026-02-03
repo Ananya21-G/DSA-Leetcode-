@@ -1,0 +1,166 @@
+925. Long Pressed Name
+🔹 Problem Statement (Simplified)
+
+Your friend is typing their name on a keyboard.
+Sometimes, a key is long-pressed, so a character may appear multiple times instead of once.
+
+You are given:
+
+name → the intended string
+
+typed → the string that actually appeared
+
+Task
+
+Return true if typed can be formed from name by long-pressing some characters.
+Otherwise, return false.
+
+🔹 Key Rules
+
+Characters must appear in the same order
+
+Characters in typed can repeat only if they match the previous character
+
+You cannot skip characters from name
+
+You cannot add new characters
+
+🔹 Examples
+Example 1
+name  = "alex"
+typed = "aaleex"
+
+
+Explanation:
+
+'a' → "aa" (long pressed)
+
+'l' → "l"
+
+'e' → "ee" (long pressed)
+
+'x' → "x"
+
+✅ Valid → true
+
+Example 2
+name  = "saeed"
+typed = "ssaaedd"
+
+
+Explanation:
+
+name needs two 'e'
+
+typed has only one 'e'
+
+❌ Invalid → false
+
+🧠 Brain Note (Memory Anchor)
+
+Pattern: Two Pointers
+
+When to use: Comparing two strings while allowing controlled repetition
+
+Core idea: Extra characters are allowed only if they repeat the previous one
+
+🔹 Approach (Step-by-Step)
+
+We compare both strings from left to right using two pointers.
+
+Pointers
+
+i → index for name
+
+j → index for typed
+
+At each step:
+
+If characters match
+
+name[i] == typed[j]
+
+
+→ Move both pointers forward
+
+If characters don’t match
+
+Check if typed[j] is a repeat of the previous typed character
+
+typed[j] == typed[j - 1]
+
+
+→ This means long press → move only j
+
+Otherwise
+
+Invalid situation → return false
+
+Final Check
+
+After the loop:
+
+If all characters of name are used → return true
+
+Else → return false
+
+🔹 Why This Approach Works
+
+Maintains order
+
+Allows controlled repetition
+
+Prevents missing or extra characters
+
+Runs in linear time
+
+⏱️ Time & Space Complexity
+
+Time Complexity: O(n)
+(n = length of typed)
+
+Space Complexity: O(1)
+(no extra data structures)
+
+🧑‍💻 Java Solution (Well-Documented)
+class Solution {
+    public boolean isLongPressedName(String name, String typed) {
+
+        int i = 0; // Pointer for name
+        int j = 0; // Pointer for typed
+
+        while (j < typed.length()) {
+
+            // Case 1: Characters match
+            if (i < name.length() && name.charAt(i) == typed.charAt(j)) {
+                i++;
+                j++;
+            }
+
+            // Case 2: Long press detected (repeat of previous character)
+            else if (j > 0 && typed.charAt(j) == typed.charAt(j - 1)) {
+                j++;
+            }
+
+            // Case 3: Invalid character
+            else {
+                return false;
+            }
+        }
+
+        // All characters in name must be matched
+        return i == name.length();
+    }
+}
+
+🔹 Edge Cases to Remember
+
+typed shorter than name → ❌ false
+
+Extra characters must be repeats, not new letters
+
+Order must never change
+
+📝 One-Line Summary (For Exams)
+
+Use two pointers to traverse both strings, allowing extra characters in typed only if they repeat the previous character, and ensure all characters of name are matched.
