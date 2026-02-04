@@ -1,0 +1,93 @@
+At Most One Contiguous Segment of Ones
+🔹 Problem Statement
+
+You are given a binary string s with no leading zeros (i.e., s[0] = '1').
+Your task is to check whether the string contains at most one continuous (contiguous) segment of '1's.
+
+Return true → if all '1's appear in one block
+
+Return false → if '1's appear in more than one separated block
+
+🔹 Key Observations
+
+Since the string starts with '1', a segment of ones always begins at index 0.
+
+A problem occurs only if a new '1' appears after a '0'.
+
+The pattern "01" directly indicates:
+
+End of one '1' segment
+
+Start of another '1' segment
+❌ This violates the condition.
+
+🔹 Core Idea (One-Line Logic)
+
+If the string contains "01", then there is more than one segment of ones.
+
+🔹 Algorithm (Step-by-Step)
+
+Scan the string s
+
+Check whether substring "01" exists
+
+If it exists → return false
+
+Otherwise → return true
+
+🔹 Example Walkthrough
+Example 1
+
+Input: s = "1001"
+
+Index:  0 1 2 3
+Chars:  1 0 0 1
+
+
+'1' → '0' → first segment ends
+
+'0' → '1' → new segment starts ❌
+Result: false
+
+Example 2
+
+Input: s = "110"
+
+Index:  0 1 2
+Chars:  1 1 0
+
+
+Only one continuous segment of '1'
+Result: true
+
+🔹 Code Implementation (Java)
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        return !s.contains("01");
+    }
+}
+
+🔹 Time & Space Complexity
+
+Time Complexity: O(n)
+
+Space Complexity: O(1)
+
+🧠 Brain Note (Memory Anchor)
+
+Pattern Name: String pattern detection
+
+When to use: Checking continuity or segmentation in strings
+
+Core Idea: "01" means ones appear in multiple segments
+
+🔹 Common Mistake to Avoid
+
+❌ Counting number of '1's
+❌ Using extra arrays or counters
+
+✔ Just detect pattern change from 0 → 1 after start
+
+🔹 One-Line Summary (For Revision)
+
+If a binary string has "01" inside it, then it has more than one block of ones.
