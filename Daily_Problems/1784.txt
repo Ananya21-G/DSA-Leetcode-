@@ -90,4 +90,4 @@ Core Idea: "01" means ones appear in multiple segments
 
 🔹 One-Line Summary (For Revision)
 
-If a binary string has "01" inside it, then it has more than one block of ones.
+If a binary string has "01" inside it, then it has more than one block of ones. 

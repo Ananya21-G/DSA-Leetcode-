@@ -1,0 +1,120 @@
+Maximum Repeating Substring
+📌 Problem Summary
+
+You are given two strings:
+
+sequence
+
+word
+
+A string word is k-repeating if word concatenated k times (word × k) appears as a substring of sequence.
+
+Your task is to return the maximum value of k for which this condition holds.
+
+If word never appears in sequence, return 0.
+
+🧠 Key Definitions
+
+Substring → Continuous characters (no skipping).
+
+k-repeating → word must repeat consecutively.
+
+Maximum k → Stop at the first failure.
+
+🧠 Brain Note (Memory Anchor)
+
+Pattern: Incremental string growth
+When to use: Finding max consecutive repetition of a pattern
+Core idea: Keep appending word and test substring existence
+
+💡 Intuition
+
+Instead of scanning indices or using complex pattern matching:
+
+Start with word
+
+Check if it exists in sequence
+
+If yes → append word again
+
+Repeat until it fails
+
+The moment word × (k+1) is not found, the answer is k.
+
+Because the constraints are small (≤ 100), a greedy incremental approach is ideal.
+
+🧪 Example Walkthrough
+Input
+sequence = "ababc"
+word = "ab"
+
+Checks
+Attempt	Repeated String	Exists?
+k=1	"ab"	✅
+k=2	"abab"	✅
+k=3	"ababab"	❌
+Output
+2
+
+🛠️ Algorithm
+
+Initialize k = 0
+
+Set repeated = word
+
+While sequence.contains(repeated):
+
+Increment k
+
+Append word to repeated
+
+Return k
+
+✅ Java Implementation
+class Solution {
+    public int maxRepeating(String sequence, String word) {
+        int k = 0;
+        String repeated = word;
+
+        while (sequence.contains(repeated)) {
+            k++;
+            repeated += word;
+        }
+
+        return k;
+    }
+}
+
+🧩 Why This Works
+
+String.contains() checks for substring, exactly what we need
+
+Each loop increases repetition by one
+
+First failure guarantees previous k was the maximum valid value
+
+⏱️ Complexity Analysis
+
+Time Complexity:
+O(n²) in the worst case
+(safe because n ≤ 100)
+
+Space Complexity:
+O(n) due to the growing repeated string
+
+⚠️ Edge Cases
+Case	Result
+word not in sequence	0
+sequence == word	1
+word.length() > sequence.length()	0
+Single character repeats	Works correctly
+🎯 Interview Notes
+
+If asked “Can this be optimized?”, say:
+
+Yes, KMP or DP can optimize pattern matching, but given small constraints, this greedy solution is the cleanest and most readable.
+
+🧠 Final Takeaway
+
+This problem is not about clever algorithms —
+it’s about recognizing repetition and stopping at the right time.
