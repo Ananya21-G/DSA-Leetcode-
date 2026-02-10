@@ -1,0 +1,100 @@
+LeetCode 1295 — Find Numbers with Even Number of Digits
+🧩 Problem Statement
+
+Given an array of positive integers, determine how many numbers in the array contain an even number of digits.
+
+🧠 Approach Overview
+
+The key idea is to count the number of digits in each integer and check whether that count is even.
+
+We process the array one number at a time, apply digit counting, and maintain a counter for numbers that satisfy the condition.
+
+🔍 Digit Counting Logic
+
+To count digits in a number:
+
+Repeatedly divide the number by 10
+
+Each division removes one digit
+
+Count how many times this operation is performed until the number becomes 0
+
+Example:
+
+7896 → 789 → 78 → 7 → 0
+Digits = 4
+
+🧪 Example Walkthrough
+Input
+[12, 345, 2, 6, 7896]
+
+Number	Digits	Even?
+12	2	✅
+345	3	❌
+2	1	❌
+6	1	❌
+7896	4	✅
+Output
+2
+
+🛠️ Algorithm Steps
+
+Initialize a counter to store the result.
+
+Iterate through each number in the array.
+
+For each number:
+
+Count its digits using division by 10.
+
+Check if the digit count is even.
+
+If even, increment the counter.
+
+Return the final counter value.
+
+💻 Java Implementation
+class Solution {
+    public int findNumbers(int[] nums) {
+        int count = 0;
+
+        for (int num : nums) {
+            int digits = 0;
+            int temp = num;
+
+            while (temp > 0) {
+                digits++;
+                temp = temp / 10;
+            }
+
+            if (digits % 2 == 0) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+
+⏱️ Complexity Analysis
+Metric	Value
+Time Complexity	O(n × d) where d is number of digits
+Space Complexity	O(1)
+
+Since the maximum number of digits is small (≤ 6), the algorithm is efficient.
+
+🧠 Brain Note (Memory Anchor)
+
+Pattern: Digit Counting
+
+When to use: When conditions depend on number length
+
+Core idea: Division by 10 removes one digit at a time
+
+✅ Key Takeaways
+
+This problem is more about number properties than arrays.
+
+Digit counting using division is reliable and intuitive.
+
+Always separate logic understanding from code writing.
